@@ -46,7 +46,7 @@ repositories.each_pair do |repository_name, repository_spec|
     path "/etc/pki/rpm-gpg/#{repository_spec['gpgkey']}"
     source repository_spec['gpgkey']
     action :create
-    only_if { repository_spec['gpgkey'] }
+    not_if { repository_spec['gpgkey'].nil? }
   end
 end
 # rubocop:enable Metrics/BlockLength

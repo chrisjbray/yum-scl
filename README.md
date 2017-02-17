@@ -1,72 +1,69 @@
-# yum-softwarecollections Cookbook
+# yum-scl Cookbook
 
-TODO: Enter the cookbook description here.
-
-e.g.
-This cookbook makes your favorite breakfast sandwich.
+Configures softwarecollections yum repository
 
 ## Requirements
 
-TODO: List your cookbook requirements. Be sure to include any requirements this cookbook has on platforms, libraries, other cookbooks, packages, operating systems, etc.
-
-e.g.
 ### Platforms
 
-- SandwichOS
+- Scientific Linux 6.0 or later
+- CentoOS Linux 6.0 or later
 
 ### Chef
 
 - Chef 12.0 or later
 
-### Cookbooks
-
-- `toaster` - yum-softwarecollections needs toaster to brown your bagel.
-
 ## Attributes
 
-TODO: List your cookbook attributes here.
+- default['yum-scl']['prefer_os_package'] - configure repository using package provided by OS (if available)
+- default['yum-scl']['enable_testing'] = false - enable testing repositories of softwarecollections
+- default['yum-scl']['enable_source'] = false - enable source repositories of softwarecollections
+- default['yum-scl']['enable_debuginfo'] = false - enable debuginfo repositories of softwarecollections
 
-e.g.
-### yum-softwarecollections::default
+## Recipes
 
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['yum-softwarecollections']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
-  </tr>
-</table>
+### yum-scl::default
 
-## Usage
-
-### yum-softwarecollections::default
-
-TODO: Write usage instructions for each cookbook.
-
-e.g.
-Just include `yum-softwarecollections` in your node's `run_list`:
+The default recipe tries to install package for softwarecollection repositories provided by OS then falls to 
+installation using yum_repository resource
 
 ```json
 {
   "name":"my_node",
   "run_list": [
-    "recipe[yum-softwarecollections]"
+    "recipe[yum-scl]"
+  ]
+}
+```
+
+### yum-scl::native_install
+
+The recipe installs package for softwarecollection repositories provided by OS
+
+```json
+{
+  "name":"my_node",
+  "run_list": [
+    "recipe[yum-scl::native_install]"
+  ]
+}
+```
+
+### yum-scl::chef_install
+
+The recipe adds yum repositories using chef yum_repository resource
+
+```json
+{
+  "name":"my_node",
+  "run_list": [
+    "recipe[yum-scl::chef_install]"
   ]
 }
 ```
 
 ## Contributing
 
-TODO: (optional) If this is a public cookbook, detail the process for contributing. If this is a private cookbook, remove this section.
-
-e.g.
 1. Fork the repository on Github
 2. Create a named feature branch (like `add_component_x`)
 3. Write your change
@@ -76,5 +73,4 @@ e.g.
 
 ## License and Authors
 
-Authors: TODO: List authors
-
+Authors: Dmitry Shestoperov
