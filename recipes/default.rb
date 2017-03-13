@@ -9,7 +9,7 @@
 
 Chef::Recipe.send(:include, YumSCL::Helper)
 
-if use_os_native_package?(node['yum-scl']['prefer_os_package'],
+if yum_scl_use_os_native_package?(node['yum-scl']['prefer_os_package'],
                           node['yum-scl']['native_packages'])
   include_recipe "#{cookbook_name}::native_install"
 else

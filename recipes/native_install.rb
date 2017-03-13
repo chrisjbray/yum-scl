@@ -19,14 +19,14 @@ node['yum-scl']['native_packages'].each do |package|
     block do
       Chef::Resource.send(:include, YumSCL::Helper)
       require 'inifile'
-      package_repo_files(package).each do |repo_conf|
+      yum_scl_package_repo_files(package).each do |repo_conf|
         %w(testing source debuginfo).each do |ext_repo|
           repo_ini = IniFile.load(repo_conf)
           matched_repos = repo_ini.sections.select do |repository_name|
             /^.+-#{ext_repo}$/.match(repository_name)
           end
           matched_repos.each do |repository_name|
-            enable_repo(repository_name, node['yum-scl']["enable_#{ext_repo}"])
+            yum_scl_enable_repo(repository_name, node['yum-scl']["enable_#{ext_repo}"])
           end
         end
       end
